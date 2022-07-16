@@ -14,5 +14,5 @@ jobs:
     - name: 3. 파이썬 실행
       run: python test.py
     - name: 4. 파이썬 명령어 실행
-      run: print(Hey~ World)
+      run: print('Hey~ World')
       
