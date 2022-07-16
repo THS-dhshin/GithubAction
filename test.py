@@ -9,16 +9,31 @@ response.encoding = 'utf-8'
 html = response.text
 
 soup = BeautifulSoup(html, 'html.parser')
-soup.select('#update')[0].text
-soup.select('.main')[1]
+
+# soup.select('#update')[0].text
+# soup.select('.main')[1]
+
 oneStep = soup.select('.main')[2]
 twoStep = oneStep.select('tbody > tr')[1:]
  # twoStep[0].select('td')[1].text
-twoStep[0].select('td')[1].text.replace(',', '')
+# twoStep[0].select('td')[1].text.replace(',', '')
+
 날짜 = []
 종가 = []
 전일비 = []
 거래량 = []
+
+#####################################
+
+시가총액 = soup.select('#_market_sum')[0].text
+시가총액순위 = soup.select('#_market_sum')[1].text
+상장주식수 = soup.select('#_market_sum')[2]
+나머지값 = soup.select('tr > td')
+배당수익률 = 나머지값[5].text.strip()
+매출 = 나머지값[6].text
+비용 = 나머지값[7].text
+순익 = 나머지값[8].text
+
 
 for i in twoStep:
     날짜.append(i.select('td')[0].text)
@@ -32,6 +47,7 @@ for i in twoStep:
 # plt.plot(날짜, 종가)
 # plt.xticks(rotation = -45 )
 # plt.show()
+
 lst = []
 
 for i in range(len(날짜)):
@@ -41,7 +57,6 @@ for i in range(len(날짜)):
         '전일비':전일비[i],
         '거래량':거래량[i]
     })
-lst
 
 
 #파일을 한번 쓴다.
@@ -57,5 +72,17 @@ with open('data.js', "r", encoding="UTF-8-sig") as f:
 
 # 파일에 변수명을 추가하여 다시 쓴다
 final_data = f"var data = {data};"
+final_data = f"var 시가총액 = '{시가총액}';\n\
+var 시가총액순위 = '{시가총액순위}';\n\
+var 상장주식수 = '{상장주식수}';\n\
+var 배당수익률 = '{배당수익률}';\n\
+var 매출 = '{매출}';\n\
+var 비용 = '{비용}';\n\
+var 순익 = '{순익}';\n\
+" + final_data
+
+
+
 with open('data.js', "w", encoding="UTF-8-sig") as f_write:
     f_write.write(final_data)
+  
