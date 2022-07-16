@@ -6,25 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    #run 뒤에는 실제 작동하는 코드를 넣는다.
-    - name: Setup Python
-      uses: actions/setup-python@v4.1.0
-    with:
-      # Version range or exact version of Python to use, using SemVer's version range syntax. Reads from .python-version if unset.
-      python-version: # optional
-      # File containing the Python version to use. Example: .python-version
-      python-version-file: # optional
-      # Used to specify a package manager for caching in the default directory. Supported values: pip, pipenv, poetry.
-      cache: # optional
-      # The target architecture (x86, x64) of the Python interpreter.
-      architecture: # optional
-      # Used to pull python distributions from actions/python-versions. Since there's a default, this is typically not supplied by the user.
-      token: # optional, default is ${{ github.token }}
-      # Used to specify the path to dependency files. Supports wildcards or a list of file names for caching multiple dependencies.
-      cache-dependency-path: # optional
-      # Set this option if you want the action to update environment variables.
-      update-environment: # optional, default is true
-      
-    - name: 파이썬 버전 출력!!
-      run: python -v
-    
+    - uses: actions/checkout@v2
+    - name: 1. 파일 목록 출력
+      run : ls -al
+    - name: 2. 파이썬 키지 확인
+      run: pip list
